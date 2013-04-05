@@ -5,9 +5,9 @@ module FlashCookieSession
       @session_key = session_key
     end
 
-    def call(env)
+    def call(env) 
+      req = Rack::Request.new(env)
       if !req.params[@session_key].nil?
-        req = Rack::Request.new(env)
         the_session_key = [ @session_key, req.params[@session_key] ].join('=').freeze if req.params[@session_key]
 
         if req.params['remember_token'] && req.params['remember_token'] != 'null'
