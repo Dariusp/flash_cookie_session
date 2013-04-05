@@ -6,7 +6,7 @@ module FlashCookieSession
     end
 
     def call(env)
-      if env['HTTP_USER_AGENT'] =~ /^(Adobe|Shockwave) Flash/ or env['HTTP_REFERER'] =~ /.swf/
+      if !req.params[@session_key].nil?
         req = Rack::Request.new(env)
         the_session_key = [ @session_key, req.params[@session_key] ].join('=').freeze if req.params[@session_key]
 
